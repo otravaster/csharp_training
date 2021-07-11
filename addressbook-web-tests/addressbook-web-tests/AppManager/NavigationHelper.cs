@@ -18,7 +18,7 @@ namespace WebAddressbookTests
             this.baseURL = baseURL;
         }
 
-        public void GoToHomePage()
+        public void OpenHomePage()
         {
             driver.Navigate().GoToUrl(baseURL);
         }

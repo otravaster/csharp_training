@@ -13,7 +13,7 @@ namespace WebAddressbookTests
             //baseURL = "http://localhost/addressbook";
             //verificationErrors = new StringBuilder();
             app = new ApplicationManager();
-            app.Navigator.GoToHomePage();
+            app.Navigator.OpenHomePage();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
 

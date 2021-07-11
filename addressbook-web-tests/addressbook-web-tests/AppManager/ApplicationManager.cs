@@ -82,7 +82,5 @@ namespace WebAddressbookTests
                 return contactHelper;
             }
         }
-
-        
     }
 }
