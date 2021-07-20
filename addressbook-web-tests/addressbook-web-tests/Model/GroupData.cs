@@ -8,7 +8,6 @@ namespace WebAddressbookTests
 {
     public class GroupData
     {
-
         private string name;
         private string header = string.Empty;
         private string footer = string.Empty;
