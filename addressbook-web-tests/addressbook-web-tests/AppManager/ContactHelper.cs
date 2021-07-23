@@ -14,6 +14,7 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
+        private string baseURL;
         private bool acceptNextAlert = true;
 
         public ContactHelper(ApplicationManager manager) : base(manager)
@@ -29,26 +30,41 @@ namespace WebAddressbookTests
             return this;
         }
 
-        //public ContactHelper Modify(int index, ContactData newData)
-        //{
-        //    InitContactModification(index);
-        //    FillContactForm(newData);
-        //    SubmitContactModification();
-        //    ReturnToHomePage();
-        //    return this;
-        //}
-
-        public ContactHelper Modify(int index, ContactData newData)
+        public ContactHelper Modify(int index, ContactData contact, ContactData modifiedContact)
         {
+            manager.Navigator.OpenHomePage();
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                GoToAddNewContactPage();
+                FillContactForm(contact);
+                SubmitContactCreation();
+                ReturnToHomePage();
+                InitContactModification(index);
+                FillContactForm(modifiedContact);
+                SubmitContactModification();
+                ReturnToHomePage();
+                return this;
+            }
             InitContactModification(index);
-            FillContactForm(newData);
+            FillContactForm(modifiedContact);
             SubmitContactModification();
             ReturnToHomePage();
             return this;
         }
 
-        public ContactHelper Remove(int index)
+        public ContactHelper Remove(int index, ContactData contact)
         {
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                GoToAddNewContactPage();
+                FillContactForm(contact);
+                SubmitContactCreation();
+                ReturnToHomePage();
+                SelectContact(index);
+                SubmitContactDeletion();
+                return this;
+            }
             SelectContact(index);
             SubmitContactDeletion();
             return this;
@@ -56,18 +72,19 @@ namespace WebAddressbookTests
 
         public ContactHelper GoToAddNewContactPage()
         {
+            if (driver.Url == baseURL + "/edit.php")
+            {
+                return this;
+            }
+
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
 

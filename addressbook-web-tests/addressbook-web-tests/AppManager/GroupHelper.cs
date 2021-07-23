@@ -26,20 +26,45 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Modify(int p, GroupData newData)
+        public GroupHelper Modify(int p, GroupData group, GroupData modifiedGroup)
         {
             manager.Navigator.GoToGroupsPage();
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                InitGroupCreation();
+                FillGroupForm(group);
+                SubmitGroupCreation();
+                ReturnToGroupsPage();
+                SelectGroup(p);
+                InitGroupModification();
+                FillGroupForm(modifiedGroup);
+                SubmitGroupModification();
+                ReturnToGroupsPage();
+                return this;
+            }
             SelectGroup(p);
             InitGroupModification();
-            FillGroupForm(newData);
+            FillGroupForm(modifiedGroup);
             SubmitGroupModification();
             ReturnToGroupsPage();
             return this;
         }
 
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove(int p, GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                InitGroupCreation();
+                FillGroupForm(group);
+                SubmitGroupCreation();
+                ReturnToGroupsPage();
+                SelectGroup(p);
+                RemoveGroup();
+                ReturnToGroupsPage();
+                return this;
+            }
             SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -54,15 +79,9 @@ namespace WebAddressbookTests
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            Type(By.Name("group_name"), group.Name);
+            Type(By.Name("group_header"), group.Header);
+            Type(By.Name("group_footer"), group.Footer);
             return this;
         }
 

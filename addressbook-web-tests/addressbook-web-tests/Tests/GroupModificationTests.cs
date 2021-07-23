@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : TestBase
+    public class GroupModificationTests : AuthTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("mz_upd");
-            newData.Header = "mz_upd_header";
-            newData.Footer = "mz_upd_footer";
+            GroupData group = new GroupData("mz");
+            group.Header = "mz_header";
+            group.Footer = "mz_footer";
 
-            app.Groups.Modify(1, newData);
+            GroupData modifiedGroup = new GroupData("mz_upd");
+            modifiedGroup.Header = null;
+            modifiedGroup.Footer = null;
+            
+            app.Groups.Modify(1, group, modifiedGroup);
         }
     }
 }
