@@ -10,7 +10,10 @@ namespace WebAddressbookTests
         {
             ContactData contact = new ContactData("Maria", "Zavgor");
             
-            app.Contacts.Remove(2, contact);
+            //check if Contact exists and if false - then create a Contact
+            app.Contacts.CreateContactIfNeeded(contact);
+
+            app.Contacts.Remove(2);
         }
     }
 }

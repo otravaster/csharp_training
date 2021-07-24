@@ -21,7 +21,26 @@ namespace WebAddressbookTests
         {
         }
 
-        public ContactHelper Create(ContactData contact) 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.OpenHomePage();
+
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//*[@name='entry']"));
+
+            foreach (IWebElement element in elements)
+            {
+                ContactData contact = new ContactData(
+                    element.FindElement(By.XPath("//td[2]")).Text,
+                    element.FindElement(By.XPath("//td[3]")).Text);
+                
+                contacts.Add(contact);
+            }
+            return contacts;
+        }
+
+        public ContactHelper Create(ContactData contact)
         {
             GoToAddNewContactPage();
             FillContactForm(contact);
@@ -30,22 +49,22 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int index, ContactData contact, ContactData modifiedContact)
+        public ContactHelper CreateContactIfNeeded(ContactData contact)
         {
             manager.Navigator.OpenHomePage();
 
             if (!IsElementPresent(By.Name("selected[]")))
             {
-                GoToAddNewContactPage();
-                FillContactForm(contact);
-                SubmitContactCreation();
-                ReturnToHomePage();
-                InitContactModification(index);
-                FillContactForm(modifiedContact);
-                SubmitContactModification();
-                ReturnToHomePage();
+                Create(contact);
                 return this;
             }
+            return this;
+        }
+        
+        public ContactHelper Modify(int index, ContactData modifiedContact)
+        {
+            manager.Navigator.OpenHomePage();
+            
             InitContactModification(index);
             FillContactForm(modifiedContact);
             SubmitContactModification();
@@ -53,18 +72,8 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Remove(int index, ContactData contact)
+        public ContactHelper Remove(int index)
         {
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                GoToAddNewContactPage();
-                FillContactForm(contact);
-                SubmitContactCreation();
-                ReturnToHomePage();
-                SelectContact(index);
-                SubmitContactDeletion();
-                return this;
-            }
             SelectContact(index);
             SubmitContactDeletion();
             return this;

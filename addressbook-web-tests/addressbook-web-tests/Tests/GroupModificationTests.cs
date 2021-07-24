@@ -20,8 +20,11 @@ namespace WebAddressbookTests
             GroupData modifiedGroup = new GroupData("mz_upd");
             modifiedGroup.Header = null;
             modifiedGroup.Footer = null;
-            
-            app.Groups.Modify(1, group, modifiedGroup);
+
+            //check if Group exists and if false - then create a group
+            app.Groups.CreateGroupIfNeeded(group);
+
+            app.Groups.Modify(0, modifiedGroup);
         }
     }
 }

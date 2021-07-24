@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -12,7 +13,17 @@ namespace WebAddressbookTests
             group.Header = "mz_header";
             group.Footer = "mz_footer";
 
-            app.Groups.Remove(1, group);
+            //check if Group exists and if false - then create a group
+            app.Groups.CreateGroupIfNeeded(group);
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Remove(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
