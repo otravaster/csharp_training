@@ -13,12 +13,12 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData("Maria", "Zavgor");
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-
             app.Contacts.Create(contact);
-
             List<ContactData> newContacts = app.Contacts.GetContactList();
-
-            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

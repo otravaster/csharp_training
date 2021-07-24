@@ -24,7 +24,14 @@ namespace WebAddressbookTests
             //check if Group exists and if false - then create a group
             app.Groups.CreateGroupIfNeeded(group);
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
             app.Groups.Modify(0, modifiedGroup);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = modifiedGroup.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
