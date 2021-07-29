@@ -30,6 +30,11 @@ namespace WebAddressbookTests
             return firstname == other.Firstname && lastname == other.Lastname;
         }
 
+        public override int GetHashCode()
+        {
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
+        }
+
         public override string ToString()
         {
             return "firstname lastname = " + Firstname + Lastname;
@@ -37,11 +42,20 @@ namespace WebAddressbookTests
 
         public int CompareTo(ContactData other)
         {
-            if (Object.ReferenceEquals(other, null))
+            //if (Object.ReferenceEquals(other, null))
+            if (other is null)
             {
                 return 1;
             }
-            return (Firstname + Lastname).CompareTo(other.Firstname + other.Lastname);
+            //return (Firstname + Lastname).CompareTo(other.Firstname + other.Lastname);
+            if (Lastname == other.Lastname)
+            {
+                if (Firstname == other.Firstname)
+                {
+                    return 0;
+                }
+            }
+            return Lastname.CompareTo(other.Lastname);
         }
 
         public string Firstname
