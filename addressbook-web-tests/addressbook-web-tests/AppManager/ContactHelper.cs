@@ -32,22 +32,20 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
                 foreach (IWebElement element in elements)
                 {
-                    ContactData contact = new ContactData(
-                        element.FindElement(By.XPath(".//td[3]")).Text,
-                        element.FindElement(By.XPath(".//td[2]")).Text);
-
+                    ContactData contact = new ContactData(element.FindElement(By.XPath(".//td[3]")).Text, element.FindElement(By.XPath(".//td[2]")).Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    };
                     contactCache.Add(contact);
                 }
             }
-            
             return new List<ContactData>(contactCache);
         }
 
         public int GetContactCount()
         {
-            return driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr[@name='entry']/td/input[@name='selected[]']")).Count;
-            //return driver.FindElements(By.Name("selected[]")).Count;
-
+            //return driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr[@name='entry']/td/input[@name='selected[]']")).Count;
+            return driver.FindElements(By.Name("selected[]")).Count;
         }
 
         public ContactHelper Create(ContactData contact)
@@ -143,8 +141,8 @@ namespace WebAddressbookTests
         {
             acceptNextAlert = true;
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             contactCache = null;
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
 

@@ -18,9 +18,10 @@ namespace WebAddressbookTests
                 Footer = "mz_footer"
             };
 
-            GroupData modifiedGroup = new GroupData("mz_upd");
-            modifiedGroup.Header = null;
-            modifiedGroup.Footer = null;
+            GroupData modifiedGroup = new GroupData("mz_upd") {
+                Header = null,
+                Footer = null
+            };
 
             //check if Group exists and if false - then create a group
             app.Groups.CreateGroupIfNeeded(newGroup);
