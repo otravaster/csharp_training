@@ -23,7 +23,7 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return Name == other.Name;
+            return Name==other.Name ;
         }
 
         public override int GetHashCode()
@@ -33,7 +33,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name = " + Name;
+            return "name=" + Name;
         }
 
         public int CompareTo(GroupData other)
