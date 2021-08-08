@@ -11,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetails;
 
         public ContactData(string firstname, string lastname)
         {
@@ -98,13 +99,39 @@ namespace WebAddressbookTests
             }
         }
 
-        private string CleanUp(string phone)
+        public string AllDetails
         {
-            if (phone == null || phone == "")
+            get
+            {
+                if (allDetails != null)
+                {
+                    return allDetails;
+                }
+                else
+                {
+                    return (Firstname + " " + Lastname + "\r\n" 
+                        + Address + "\r\n\r\n"
+                        + "H: " + CleanUp(HomePhone)
+                        + "M: " + CleanUp(MobilePhone)
+                        + "W: " + CleanUp(WorkPhone) + "\r\n"
+                        + Email + "\r\n"
+                        + Email2 + "\r\n"
+                        + Email3);
+                }
+            }
+            set
+            {
+                allDetails = value;
+            }
+        }
+
+        private string CleanUp(string info)
+        {
+            if (info == null || info == "")
             {
                 return String.Empty;
             }
-            return Regex.Replace(phone, "[ -()]", String.Empty) + "\r\n";
+            return Regex.Replace(info, "[ -()]", String.Empty) + "\r\n";
         }
 
         public bool Equals(ContactData other)

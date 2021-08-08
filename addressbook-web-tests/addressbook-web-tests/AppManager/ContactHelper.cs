@@ -132,6 +132,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper OpenContactDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
         public ContactHelper InitContactModification(int index)
         {
             //driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+1) + "]/td[8]/a/img")).Click();
@@ -179,7 +187,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public ContactData GetContactInfromationFromTable(int index)
+        public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.OpenHomePage();
 
@@ -199,7 +207,7 @@ namespace WebAddressbookTests
             };
         }
 
-        public ContactData GetContactInfromationFromEditForm(int index)
+        public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.OpenHomePage();
             InitContactModification(0);
@@ -227,6 +235,15 @@ namespace WebAddressbookTests
             };
         }
 
+        public string GetContactDetailsFromViewForm(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            OpenContactDetails(index);
+            string allDetails = driver.FindElement(By.Id("content")).Text.Trim();
+            return allDetails;
+        }
+
+        
         public int GetNumberOfSearchResults()
         {
             manager.Navigator.OpenHomePage();
