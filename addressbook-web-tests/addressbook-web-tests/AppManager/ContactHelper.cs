@@ -226,5 +226,14 @@ namespace WebAddressbookTests
                 Email3 = email3
             };
         }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.OpenHomePage();
+            //string text = driver.FindElement(By.TagName("label")).Text;
+            //Match m = new Regex(@"\d+").Match(text);
+            string text = driver.FindElement(By.Id("search_count")).Text;
+            return Int32.Parse(text);
+        }
     }
 }
