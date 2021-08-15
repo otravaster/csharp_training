@@ -110,13 +110,9 @@ namespace WebAddressbookTests
                 else
                 {
                     return (Firstname + " " + Lastname + "\r\n" 
-                        + Address + "\r\n\r\n"
-                        + "H: " + CleanUp(HomePhone)
-                        + "M: " + CleanUp(MobilePhone)
-                        + "W: " + CleanUp(WorkPhone) + "\r\n"
-                        + Email + "\r\n"
-                        + Email2 + "\r\n"
-                        + Email3);
+                        + CleanUpAddress(Address) + "\r\n"
+                        + CleanUpPhone("H: ", HomePhone) + CleanUpPhone("M: ", MobilePhone) + CleanUpPhone("W: ", WorkPhone) + "\r\n"
+                        + CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
                 }
             }
             set
@@ -132,6 +128,24 @@ namespace WebAddressbookTests
                 return String.Empty;
             }
             return Regex.Replace(info, "[ -()]", String.Empty) + "\r\n";
+        }
+
+        private string CleanUpAddress(string address)
+        {
+            if (address == null || address == "")
+            {
+                return String.Empty;
+            }
+            return address + "\r\n";
+        }
+
+        private string CleanUpPhone(string type, string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return String.Empty;
+            }
+            return type + phone + "\r\n";
         }
 
         public bool Equals(ContactData other)
