@@ -195,5 +195,13 @@ namespace WebAddressbookTests
             }
             return Lastname.CompareTo(other.Lastname);
         }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
+        }
     }
 }

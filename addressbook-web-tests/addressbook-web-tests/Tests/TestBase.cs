@@ -6,6 +6,7 @@ namespace WebAddressbookTests
 {
     public class TestBase
     {
+        //set 'false' if don't want to do long checks
         public static bool PERFORM_LONG_UI_CHECKS = true;
         protected ApplicationManager app;
 

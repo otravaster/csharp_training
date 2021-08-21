@@ -138,6 +138,7 @@
     <Compile Include="AppManager\NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\GroupCreationTests.cs" />
+    <Compile Include="Tests\ContactTestBase.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
