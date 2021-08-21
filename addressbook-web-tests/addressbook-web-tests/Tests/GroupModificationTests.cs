@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()
@@ -26,21 +26,21 @@ namespace WebAddressbookTests
             //check if Group exists and if false - then create a group
             app.Groups.CreateGroupIfNeeded(newGroup);
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeModified = oldGroups[0];
 
-            app.Groups.Modify(0, modifiedGroup);
+            app.Groups.Modify(toBeModified, modifiedGroup);
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = modifiedGroup.Name;
-            oldGroups.Sort();
-            newGroups.Sort();
+            List<GroupData> newGroups = GroupData.GetAll();
+            toBeModified.Name = modifiedGroup.Name;
+            //oldGroups.Sort();
+            //newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
 
             foreach (GroupData group in newGroups)
             {
-                if (group.Id == oldData.Id)
+                if (group.Id == toBeModified.Id)
                 {
                     Assert.AreEqual(modifiedGroup.Name, group.Name);
                 }
