@@ -84,6 +84,8 @@ namespace WebAddressbookTests
         {
             SelectContact(index);
             SubmitContactDeletion();
+            driver.SwitchTo().Alert().Accept();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -158,10 +160,8 @@ namespace WebAddressbookTests
 
         public ContactHelper SubmitContactDeletion()
         {
-            acceptNextAlert = true;
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactCache = null;
-            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
 
