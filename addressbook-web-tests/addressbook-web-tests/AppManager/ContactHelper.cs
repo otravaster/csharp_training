@@ -20,7 +20,7 @@ namespace WebAddressbookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
-
+        
         private List<ContactData> contactCache = null;
 
         public List<ContactData> GetContactList()
@@ -154,9 +154,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact(string id)
+        public ContactHelper SelectContact(string contactId)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
+            driver.FindElement(By.Id(contactId)).Click();
             return this;
         }
 
@@ -274,7 +274,6 @@ namespace WebAddressbookTests
             string allDetails = driver.FindElement(By.Id("content")).Text.Trim();
             return allDetails;
         }
-
         
         public int GetNumberOfSearchResults()
         {
@@ -283,6 +282,55 @@ namespace WebAddressbookTests
             //Match m = new Regex(@"\d+").Match(text);
             string text = driver.FindElement(By.Id("search_count")).Text;
             return Int32.Parse(text);
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            //smart wait
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            SetGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            CommitRemovingContactfromGroup();
+            //smart wait
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        private void SetGroupFilter(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(groupName);
+        }
+
+
+        public void SelectGroupToAdd(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(groupName); ;
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void CommitRemovingContactfromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
         }
     }
 }

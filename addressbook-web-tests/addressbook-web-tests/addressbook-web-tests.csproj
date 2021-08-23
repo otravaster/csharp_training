@@ -121,6 +121,8 @@
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="AppManager\ApplicationManager.cs" />
     <Compile Include="Model\AddressBookDB.cs" />
+    <Compile Include="Model\GroupContactRelation.cs" />
+    <Compile Include="Tests\AddContactToGroupTests.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Model\ContactData.cs" />
@@ -141,6 +143,7 @@
     <Compile Include="Tests\ContactTestBase.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
+    <Compile Include="Tests\RemoveContactFromGroupTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
   </ItemGroup>
@@ -154,9 +157,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="groups.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="groups.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="LinqToDB.Templates\DataAnnotations.ttinclude" />

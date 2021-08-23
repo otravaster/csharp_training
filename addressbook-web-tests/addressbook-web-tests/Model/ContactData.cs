@@ -25,7 +25,7 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
-        [Column(Name = "id"), PrimaryKey, Identity]
+        [Column(Name = "id"), PrimaryKey]
         public string Id { get; set; }
 
         [Column(Name = "firstname")]
@@ -69,6 +69,9 @@ namespace WebAddressbookTests
         //public string HomePhone2 { get; set; }
 
         //public string Notes { get; set; }
+
+        [Column(Name = "Deprecated")]
+        public string Deprecated { get; set; }
 
         public string AllPhones
         {
@@ -200,7 +203,7 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from c in db.Contacts select c).ToList();
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0/0/0000 0:00:00") select c).ToList();
             }
         }
     }
