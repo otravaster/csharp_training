@@ -179,9 +179,7 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(string id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])"));
-                //.FindElements(By.TagName("td"))[7]
-                //.FindElement(By.TagName("a")).Click();
+            driver.FindElement(By.XPath("//a[@href = 'edit.php?id=" + id + "']")).Click();
             return this;
         }
 
