@@ -1,16 +1,15 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
     [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        // Fields
         private string allPhones;
         private string allEmails;
         private string allDetails;
@@ -25,22 +24,23 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
-        [Column(Name = "id"), PrimaryKey]
+        // Properties
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
         [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
-        //public string Middlename { get; set; }
+        public string Middlename { get; set; }
 
         [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
-        //public string Nickname { get; set; }
+        public string Nickname { get; set; }
 
-        //public string Company { get; set; }
+        public string Company { get; set; }
 
-        //public string Title { get; set; }
+        public string Title { get; set; }
 
         public string Address { get; set; }
 
@@ -50,7 +50,7 @@ namespace WebAddressbookTests
 
         public string WorkPhone { get; set; }
 
-        //public string Fax { get; set; }
+        public string Fax { get; set; }
 
         public string Email { get; set; }
 
@@ -58,19 +58,19 @@ namespace WebAddressbookTests
 
         public string Email3 { get; set; }
 
-        //public string Homepage { get; set; }
+        public string Homepage { get; set; }
 
-        //public string Birthday { get; set; }
+        public string Birthday { get; set; }
 
-        //public string Anniversary { get; set; }
+        public string Anniversary { get; set; }
 
-        //public string Address2 { get; set; }
+        public string Address2 { get; set; }
 
-        //public string HomePhone2 { get; set; }
+        public string HomePhone2 { get; set; }
 
-        //public string Notes { get; set; }
+        public string Notes { get; set; }
 
-        [Column(Name = "Deprecated")]
+        [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
 
         public string AllPhones

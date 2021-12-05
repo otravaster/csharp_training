@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
@@ -12,17 +9,28 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddingContactToGroup()
         {
+            app.Groups.CreateGroupIfNeeded(new GroupData("mz_group"));
+            app.Contacts.CreateContactIfNeeded(new ContactData("Mary", "Barry"));
+
             GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+            List<ContactData> oldContactList = group.GetContacts();
+            List<ContactData> allContacts = ContactData.GetAll();
+
+            if (allContacts.Count == oldContactList.Count)
+            {
+                app.Contacts.Create(new ContactData("Test", "MZ"));
+            }
+
+            ContactData contact = ContactData.GetAll().Except(oldContactList).First();
 
             app.Contacts.AddContactToGroup(contact, group);
 
-            List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
-            oldList.Sort();
-            newList.Sort();
-            Assert.AreEqual(oldList, newList);
+            List<ContactData> newContactList = group.GetContacts();
+            oldContactList.Add(contact);
+            oldContactList.Sort();
+            newContactList.Sort();
+            
+            Assert.AreEqual(oldContactList, newContactList);
         }
     }
 }

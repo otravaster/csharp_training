@@ -17,17 +17,15 @@ namespace WebAddressbookTests
 
             List<ContactData> oldContacts = ContactData.GetAll();
             ContactData toBeRemoved = oldContacts[0];
-            //app.Contacts.Remove(1);
+            
             app.Contacts.Remove(toBeRemoved);
-            Thread.Sleep(5000);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = ContactData.GetAll();
             
             oldContacts.RemoveAt(0);
-            oldContacts.Sort();
-            newContacts.Sort();
+            
             Assert.AreEqual(oldContacts, newContacts);
 
             foreach (ContactData contact in newContacts)

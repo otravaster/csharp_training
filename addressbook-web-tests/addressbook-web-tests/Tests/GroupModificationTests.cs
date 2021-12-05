@@ -30,12 +30,14 @@ namespace WebAddressbookTests
             GroupData toBeModified = oldGroups[0];
 
             app.Groups.Modify(toBeModified, modifiedGroup);
+            
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = GroupData.GetAll();
             toBeModified.Name = modifiedGroup.Name;
-            //oldGroups.Sort();
-            //newGroups.Sort();
+            oldGroups.Sort();
+            newGroups.Sort();
+            
             Assert.AreEqual(oldGroups, newGroups);
 
             foreach (GroupData group in newGroups)
